@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Erzya villages</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Finlandica:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #wordSelector {
+            font-family: 'Finlandica', serif;
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            z-index: 1000;
+        }
+        .custom-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    padding: 0;
+    text-align: center;
+    font-family: 'Finlandica', serif;
+    font-size: 16px;
+    color: black;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+        .leaflet-popup-content {
+            font-family: 'Finlandica', serif;
+            text-align: center;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <select id="wordSelector">
+    </select>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map');
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+        const coordinates = {
+            "2": { lat: 53.560833, lng: 46.1483 },
+    "3": { lat: 54.50889, lng: 46.26833 },
+    "4": { lat: 53.16389, lng: 55.01417 },
+    "5": { lat: 54.63222, lng: 46.36278 },
+    "6": { lat: 55.08556, lng: 44.84417 },
+    "7": { lat: 54.72333, lng: 45.79861 },
+    "8": { lat: 54.75806, lng: 46.30750 },
+    "9": { lat: 55.12583, lng: 46.35306 },
+    "10": { lat: 54.2800, lng: 46.2494 },
+    "11": { lat: 54.6553, lng: 45.9936 },
+    "12": { lat: 55.09667, lng: 45.55694 },
+    "13": { lat: 55.01306, lng: 44.31167 },
+    "14": { lat: 54.18194, lng: 45.40528 },
+    "15": { lat: 55.037959, lng: 44.236638 },
+    "16": { lat: 55.00778, lng: 46.67722 },
+    "17": { lat: 52.6178, lng: 46.1922 },
+    "18": { lat: 54.354630, lng: 51.400602 },
+    "19": { lat: 54.7511, lng: 42.7161 },
+    "20": { lat: 54.8320, lng: 46.3681 },
+    "21": { lat: 54.6944, lng: 42.6786 },
+    "22": { lat: 54.324254, lng: 46.164082 },
+    "23": { lat: 54.573745, lng: 46.136896 },
+    "24": { lat: 53.9911, lng: 45.5933 },
+    "25": { lat: 53.2661, lng: 55.1775 },
+    "26": { lat: 54.463730, lng: 52.063279 },
+    "27": { lat: 54.3111, lng: 45.5942 },
+    "28": { lat: 54.332383, lng: 45.587532 },
+    "29": { lat: 54.9703, lng: 45.5622 },
+    "30": { lat: 54.7678, lng: 52.2903 },
+    "31": { lat: 54.767898, lng: 45.376172 },
+    "32": { lat: 53.5681, lng: 54.0111 },
+    "33": { lat: 54.69528, lng: 42.73278 },
+    "34": { lat: 54.23333, lng: 46.13167 },
+    "35": { lat: 54.673476, lng: 45.753821 },
+    "36": { lat: 53.29333, lng: 55.13611 },
+    "37": { lat: 53.62833, lng: 54.30750 },
+    "38": { lat: 55.14639, lng: 44.74333 },
+    "39": { lat: 54.09722, lng: 45.47917 },
+    "40": { lat: 54.99667, lng: 45.87083 },
+    "41": { lat: 54.74583, lng: 45.22889 },
+    "42": { lat: 53.81250, lng: 55.52500 },
+    "43": { lat: 53.94556, lng: 45.37611 },
+    "44": { lat: 54.72694, lng: 45.40722 },
+    "45": { lat: 54.26861, lng: 50.36250 },
+    "46": { lat: 54.21194, lng: 45.78000 },
+    "47": { lat: 54.33833, lng: 50.43778 },
+    "48": { lat: 53.19278, lng: 55.39639 },
+    "49": { lat: 54.43472, lng: 46.30444 },
+    "50": { lat: 53.97222, lng: 45.73278 },
+    "51": { lat: 54.66639, lng: 45.64722 },
+    "52": { lat: 54.80083, lng: 42.70083 },
+    "53": { lat: 54.64778, lng: 46.36778 },
+    "54": { lat: 54.15889, lng: 45.68139 },
+    "55": { lat: 54.89472, lng: 45.68000 },
+    "56": { lat: 54.50833, lng: 55.77250 },
+    "57": { lat: 54.50167, lng: 46.23944 },
+    "58": { lat: 54.58056, lng: 45.77500 },
+    "59": { lat: 54.99528, lng: 44.38167 },
+    "60": { lat: 55.017844, lng: 45.574184 },
+    "61": { lat: 54.76472, lng: 45.09778 },
+    "62": { lat: 54.72889, lng: 45.72889 },
+    "63": { lat: 55.25722, lng: 44.51972 },
+    "64": { lat: 54.67806, lng: 45.29889 },
+    "65": { lat: 54.46389, lng: 46.39333 },
+    "66": { lat: 54.51667, lng: 46.46667 },
+    "67": { lat: 54.42611, lng: 46.37667 },
+    "68": { lat: 54.589550, lng: 45.671553 },
+    "69": { lat: 54.43361, lng: 45.59444 },
+    "70": { lat: 54.88889, lng: 45.70194 },
+    "71": { lat: 54.82306, lng: 45.40750 },
+    "72": { lat: 53.59889, lng: 53.98556 },
+    "73": { lat: 54.72500, lng: 45.46917 },
+    "74": { lat: 54.76944, lng: 46.05722 },
+    "75": { lat: 54.38472, lng: 50.32083 },
+    "76": { lat: 53.93278, lng: 45.66889 },
+    "77": { lat: 54.70000, lng: 46.33333 },
+    "78": { lat: 54.723767, lng: 45.059297 },
+    "79": { lat: 55.029678, lng: 46.221834 },
+    "80": { lat: 54.75000, lng: 46.11667 },
+    "81": { lat: 53.46278, lng: 47.68056 },
+    "82": { lat: 55.17167, lng: 44.47167 },
+    "83": { lat: 54.99944, lng: 45.00250 },
+    "84": { lat: 54.42389, lng: 45.84389 },
+    "85": { lat: 54.25944, lng: 52.02500 },
+    "86": { lat: 54.32361, lng: 53.50222 },
+    "87": { lat: 53.87306, lng: 54.01889 },
+    "88": { lat: 54.780553, lng: 46.05000 },
+    "89": { lat: 55.08556, lng: 45.68556 },
+    "90": { lat: 54.90639, lng: 46.70083 },
+    "91": { lat: 52.01111, lng: 46.41972 },
+    "92": { lat: 54.03500, lng: 45.43222 },
+    "93": { lat: 54.42667, lng: 46.13639 },
+    "94": { lat: 54.20000, lng: 50.46667 },
+    "95": { lat: 54.98667, lng: 45.67389 },
+    "96": { lat: 54.80861, lng: 45.75639 },
+    "97": { lat: 54.72861, lng: 45.35111 },
+    "98": { lat: 54.18417, lng: 45.69722 },
+    "99": { lat: 52.82917, lng: 45.83750 },
+    "100": { lat: 54.42722, lng: 45.46472 },
+"101": { lat: 54.71639, lng: 45.18972 },
+"102": { lat: 54.46667, lng: 45.46667 },
+"103": { lat: 54.72861, lng: 46.38556 },
+"104": { lat: 54.62000, lng: 45.15194 },
+"105": { lat: 54.64417, lng: 45.73083 },
+"106": { lat: 54.48750, lng: 55.72306 },
+"107": { lat: 54.789805, lng: 45.954405 },
+"108": { lat: 53.65472, lng: 54.00417 },
+"109": { lat: 54.35056, lng: 45.66917 },
+"110": { lat: 54.25500, lng: 45.62667 },
+"111": { lat: 54.76667, lng: 45.98333 },
+"112": { lat: 54.29194, lng: 50.47028 },
+"113": { lat: 54.32972, lng: 50.43917 },
+"114": { lat: 54.98694, lng: 44.18111 },
+"115": { lat: 54.60278, lng: 45.06333 },
+"116": { lat: 54.25083, lng: 53.73444 },
+"117": { lat: 54.49917, lng: 46.33083 },
+"118": { lat: 54.40306, lng: 46.44722 },
+"119": { lat: 54.04167, lng: 45.56528 },
+"120": { lat: 53.30500, lng: 55.17472 },
+"121": { lat: 54.40556, lng: 55.96278 },
+"122": { lat: 53.71056, lng: 55.74556 },
+"123": { lat: 54.72833, lng: 42.69444 },
+"124": { lat: 52.91333, lng: 46.22500 },
+"125": { lat: 54.40500, lng: 46.32278 },
+"126": { lat: 54.43306, lng: 45.66333 },
+"127": { lat: 54.83444, lng: 45.37833 },
+"128": { lat: 55.06417, lng: 44.77889 },
+"129": { lat: 54.92333, lng: 45.60056 },
+"130": { lat: 54.25472, lng: 52.10694 },
+"131": { lat: 53.90306, lng: 45.35500 },
+"132": { lat: 54.21972, lng: 52.04722 },
+"133": { lat: 54.01667, lng: 45.46667 },
+"134": { lat: 54.16417, lng: 53.60917 },
+"135": { lat: 53.925124, lng: 45.338168 },
+"136": { lat: 54.99278, lng: 45.59778 },
+"137": { lat: 55.11000, lng: 45.62472 },
+"138": { lat: 55.03333, lng: 46.26667 },
+"139": { lat: 54.59194, lng: 46.12000 },
+"140": { lat: 55.16250, lng: 45.66667 },
+"141": { lat: 53.35111, lng: 45.38611 },
+"142": { lat: 54.37444, lng: 46.63389 },
+"143": { lat: 54.461300, lng: 46.312950 },
+"144": { lat: 54.36972, lng: 45.56222 },
+"145": { lat: 54.28056, lng: 45.70444 },
+"146": { lat: 54.68111, lng: 45.39111 },
+"147": { lat: 54.09417, lng: 45.42806 },
+"148": { lat: 54.66667, lng: 45.66667 },
+"149": { lat: 54.30000, lng: 46.20000 },
+"150": { lat: 54.10000, lng: 45.81667 },
+"151": { lat: 54.79200, lng: 45.69778 },
+"152": { lat: 54.97333, lng: 45.48417 },
+"153": { lat: 54.34306, lng: 55.59722 },
+"154": { lat: 54.12444, lng: 45.59222 },
+"155": { lat: 54.65500, lng: 46.30694 },
+"156": { lat: 54.75944, lng: 45.07917 },
+"157": { lat: 54.72306, lng: 45.28417 },
+"158": { lat: 55.06917, lng: 44.82778 },
+"159": { lat: 55.06556, lng: 44.34444 },
+"160": { lat: 53.48200, lng: 51.95167 },
+"161": { lat: 54.70806, lng: 45.54900 },
+"162": { lat: 54.70528, lng: 44.86472 },
+"163": { lat: 54.96056, lng: 45.49806 },
+"164": { lat: 54.59000, lng: 46.29417 },
+"165": { lat: 54.31222, lng: 45.77056 },
+"166": { lat: 54.44722, lng: 55.91028 },
+"167": { lat: 54.98111, lng: 45.47167 },
+"168": { lat: 53.56556, lng: 46.09528 },
+"169": { lat: 54.47833, lng: 46.52139 },
+"170": { lat: 54.40500, lng: 46.22722 },
+"172": { lat: 54.58417, lng: 46.28000 },
+"173": { lat: 54.73611, lng: 45.95722 },
+"174": { lat: 54.74139, lng: 45.58528 },
+"175": { lat: 55.02194, lng: 44.27528 },
+"176": { lat: 54.73944, lng: 45.63917 },
+"177": { lat: 54.82306, lng: 45.34444 },
+"178": { lat: 53.94306, lng: 45.33694 },
+"179": { lat: 54.25500, lng: 46.17194 },
+"180": { lat: 54.75639, lng: 42.59778 },
+"181": { lat: 54.80361, lng: 45.69111 },
+"182": { lat: 55.32556, lng: 53.86389 },
+"183": { lat: 53.89500, lng: 55.89139 },
+"184": { lat: 54.15361, lng: 45.80417 },
+"185": { lat: 53.99389, lng: 45.72056 },
+"186": { lat: 54.76500, lng: 45.99917 },
+"187": { lat: 54.56944, lng: 46.45056 },
+"188": { lat: 54.53389, lng: 46.45667 },
+"189": { lat: 54.62528, lng: 45.75444 },
+"190": { lat: 54.58417, lng: 46.24000 },
+"191": { lat: 52.91750, lng: 45.17333 },
+"192": { lat: 52.89917, lng: 45.23472 },
+"193": { lat: 55.01694, lng: 45.58722 },
+"194": { lat: 53.913571, lng: 45.475244 },
+"195": { lat: 54.26667, lng: 45.93333 },
+"196": { lat: 54.994620, lng: 46.208548 },
+"197": { lat: 53.989167, lng: 45.457778 },
+"198": { lat: 55.036389, lng: 45.456111 },
+"199": { lat: 55.060833, lng: 45.620000 },
+"200": { lat: 54.760000, lng: 45.662778 },
+"201": { lat: 54.816667, lng: 46.200000 },
+"202": { lat: 54.697500, lng: 45.452778 },
+"203": { lat: 54.631667, lng: 45.847778 },
+"204": { lat: 54.637222, lng: 45.608333 },
+"205": { lat: 54.413333, lng: 52.263333 },
+"206": { lat: 53.178611, lng: 55.185833 },
+"207": { lat: 54.092778, lng: 55.502778 },
+"208": { lat: 54.599000, lng: 45.804722 },
+"209": { lat: 55.156111, lng: 47.217222 },
+"210": { lat: 54.407222, lng: 45.780000 },
+"211": { lat: 54.988333, lng: 45.516667 },
+"212": { lat: 54.158333, lng: 46.433056 },
+"213": { lat: 55.041667, lng: 44.726389 },
+"214": { lat: 55.039722, lng: 45.517222 },
+"215": { lat: 54.715000, lng: 46.291944 },
+"216": { lat: 54.311667, lng: 50.326667 },
+"217": { lat: 54.708333, lng: 42.533056 },
+"218": { lat: 54.266111, lng: 46.093333 },
+"219": { lat: 53.573056, lng: 51.912500 },
+    "220": { lat: 54.18333, lng: 45.18333 },
+    "221": { lat: 54.06667, lng: 44.95000 },
+    "222": { lat: 54.850000, lng: 46.233333 },
+    "223": { lat: 55.383333, lng: 43.800000 }
+        };
+
+        function populateDropdown() {
+            fetch('words.json')
+                .then(response => response.json())
+                .then(data => {
+                    const wordSelector = document.getElementById('wordSelector');
+                    data.forEach((row, index) => {
+                        if (index > 0) {
+                            let option = document.createElement('option');
+                            option.value = row["1"];
+                            option.textContent = row["1"];
+                            wordSelector.appendChild(option);
+                        }
+                    });
+
+                    const firstWord = data[1]["1"];
+                    wordSelector.value = firstWord;
+                    updateLabels(firstWord);
+                })
+                .catch(error => console.error('Error loading JSON:', error));
+        }
+
+        function updateLabels(wordKey) {
+            fetch('words.json')
+                .then(response => response.json())
+                .then(data => {
+                    map.eachLayer(function (layer) {
+                        if (layer instanceof L.Marker) {
+                            map.removeLayer(layer);
+                        }
+                    });
+
+                    var bounds = L.latLngBounds([]);
+
+                    const selectedRow = data.find(row => row["1"] === wordKey);
+                    if (selectedRow) {
+                        const labels = [];
+for (let i = 2; i <= 1000; i++) {
+    labels.push({ value: selectedRow[i.toString()] });
+}
+                        const coords = [];
+for (let i = 2; i <= 1000; i++) {
+    coords.push(coordinates[i.toString()]);
+}
+
+if (labels && coords) {
+    labels.forEach(function (label, index) {
+        var coord = coords[index];
+        if (coord && label.value) {
+
+            var marker = L.marker([coord.lat, coord.lng], {
+                icon: L.divIcon({
+                    className: 'custom-label',
+                    html: `<span style="margin-left: 5px; margin-top: 3px">${label.value}</span>`,
+                }),
+                
+            }).addTo(map);
+
+            var popupValue = data[0][(index + 2).toString()];
+
+            marker.bindPopup(`${popupValue}`);
+
+            bounds.extend(marker.getLatLng());
+        }
+    });
+
+                            map.fitBounds(bounds, { padding: [50, 50] });
+                        }
+                    }
+                })
+                .catch(error => console.error('Error loading JSON:', error));
+        }
+
+        document.getElementById('wordSelector').addEventListener('change', function (e) {
+            var selectedWord = e.target.value;
+            updateLabels(selectedWord);
+        });
+
+        populateDropdown();
+
+        window.addEventListener('resize', function() {
+            map.invalidateSize();
+        });
+    </script>
+</body>
+</html>

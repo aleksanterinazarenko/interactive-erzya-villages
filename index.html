@@ -343,7 +343,7 @@ if (labels && coords) {
             var marker = L.marker([coord.lat, coord.lng], {
                 icon: L.divIcon({
                     className: 'custom-label',
-                    html: `<span style="margin-left: 5px; margin-top: 3px">${label.value}</span>`,
+                    html: `<span style="margin-top: 3px">${label.value}</span>`,
                 }),
                 
             }).addTo(map);

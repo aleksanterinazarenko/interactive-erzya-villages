@@ -9,8 +9,10 @@
             height: 100%;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
         #map {
+            position: fixed;
             height: 100%;
             width: 100%;
             position: absolute;
@@ -47,6 +49,25 @@
             text-align: center;
             font-size: 15px;
         }
+
+        @media (max-width: 600px) {
+    #wordSelector {
+        font-size: 14px;
+        padding: 8px;
+        margin: 5px;
+        top: 5px;
+        right: 5px;
+        max-width: 95%;
+    }
+
+    .custom-label {
+        font-size: 13px;
+    }
+
+    .leaflet-popup-content {
+        font-size: 13px;
+    }
+}
     </style>
 </head>
 <body>
